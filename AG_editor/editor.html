@@ -1,0 +1,51 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Main</title>
+  <script src="editor.js"></script>
+</head>
+
+<body>
+  <div id="myapp"></div>
+  <script>
+// var parentWindow = window.parent;
+  var parentWindow = window.opener;
+  window.addEventListener("message", receiveMessage, false);
+  function receiveMessage(event){
+    console.log(event.data);
+  }
+
+  var app = Elm.AG3.init({
+    node: document.getElementById('myapp')
+  });
+  app.ports.sendMes.subscribe(function(str) {
+    console.log(str)
+	  // parentWindow.postMessage(str, '*');
+    
+	  if (str == "Save"){
+		  var jsonName = window.prompt("出力するファイル名を入力してください","");
+		  if(jsonName != "" && jsonName != null){
+		  	if(window.confirm("'" + jsonName + ".json' をダウンロードします")){
+          app.ports.receiveMes.send(jsonName + ".json");
+			  }else{
+				  alert("ダウンロードをキャンセルしました");
+			  }
+		  }else if(jsonName == ""){
+			  alert("ファイル名が入力されていません");
+		  }else alert("ダウンロードをキャンセルしました");
+	  }
+    else if (str == "Reset"){
+		  if(window.confirm("エディタのブロックを全て削除します")){
+			  app.ports.receiveMes.send(true);
+		  }
+    }
+    else{
+      var tab = str[0];
+		  if(window.confirm("関数" + tab + "から始まるプログラムを送信します。")){
+	      parentWindow.postMessage(str, '*');
+		  }
+    }
+  });
+  </script>
+</body>
+</html>
