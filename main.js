@@ -3225,11 +3225,11 @@ phina.define('MainScene', {
     stage = CreateStage().addChildTo(layer2);
     //スプライトを用意
     //操作対象
-    chara[0] = Character(0, Player1(0), 300); //ヒト
-    // chara[0] = Character(0, Enemy(0), 300); //ロボ
+    // chara[0] = Character(0, Player1(0), 300); //ヒト
+    chara[0] = Character(0, Enemy(0), 300); //ロボ
     //討伐対象
-    chara[1] = Character(1, Enemy(1), SCREEN_WIDTH-300); //ヒト
-    // chara[1] = Character(1, Player1(1), SCREEN_WIDTH-300); //ロボ
+    // chara[1] = Character(1, Enemy(1), SCREEN_WIDTH-300); //ヒト
+    chara[1] = Character(1, Player1(1), SCREEN_WIDTH-300); //ロボ
     chara[0].addChildTo(layer1);
     chara[1].addChildTo(layer1);
     chara[1].direction = -1;
